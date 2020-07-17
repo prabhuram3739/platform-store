@@ -1,0 +1,20 @@
+<header class="navbar">
+  <a class="intelLogoClass" routerLink="">
+    <picture>
+      <source srcset="https://signin.intel.com/images/intel-logo.svg" type="image/svg+xml" />
+      <img src=".\assets\images\intel_wht_rgb_3000.png" class="img-fluid logoClass" alt="Intel Logo" />
+    </picture>
+  </a>
+  <h1 class="appHeading"><img [src]=myimage1 alt="App Icon" class="js-lazy-loaded qa-js-lazy-loaded appIcon appIconClass">
+    HAWK WEB
+  </h1>
+  <div class="row">
+    <span class="userId">Hi, {{userid | titlecase}}</span>
+    <a href="{{loginUrl}}/login" class="logOut" (click)="logOut()">
+      <span class="glyphicon glyphicon-log-out"></span>
+    </a>
+  </div><br/>
+  <div>
+    <a class="homeLink" routerLink="/home"><i class="intelicon-home-solid" title="Home"></i></a>
+  </div>
+</header>

@@ -1,0 +1,8 @@
+[prod-intel-ec-sles12-sp5-thirdparty-x86_64-hpc]
+name=prod-intel-ec-sles12-sp5-thirdparty-x86_64-hpc
+enabled=1
+autorefresh=1
+baseurl=http://susemgr.iglb.intel.com/ks/dist/child/prod-intel-ec-sles12-sp5-thirdparty-x86_64-hpc/SLES12SP5_EC_prod
+path=/
+type=rpm-md
+keeppackages=0

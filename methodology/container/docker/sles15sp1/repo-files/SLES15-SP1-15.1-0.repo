@@ -1,0 +1,8 @@
+[SLES15-SP1-15.1-0]
+name=SLES15-SP1-15.1-0
+enabled=1
+autorefresh=1
+baseurl=http://linuxset-repository.pdx.intel.com/distro/SLE-15-SP1-Inst
+path=/
+type=rpm-md
+keeppackages=0

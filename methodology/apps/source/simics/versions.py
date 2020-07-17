@@ -1,0 +1,1 @@
+SIMICS_VERSIONS = ('6.0', '5.0')

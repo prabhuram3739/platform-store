@@ -1,0 +1,7 @@
+[intel-ec-sles11-sp4-linuxset-x86_64]
+name=intel-ec-sles11-sp4-linuxset-x86_64
+enabled=1
+autorefresh=1
+baseurl=http://oscache.iglb.intel.com/ks/dist/child/intel-ec-sles11-sp4-linuxset-x86_64/SLES11SP4_EC/
+type=rpm-md
+gpgcheck=0

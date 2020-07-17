@@ -1,0 +1,134 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <POD_NAME> # This seems to be able to be about anything
+  namespace: <NAMESPACE>
+  labels:
+    app: <POD_NAME> #connect this to Service:spec:selector:app:label and to spec:template:labels
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: <POD_NAME> # This is within this spec: and template:
+  template: # the below applies to the individual POD
+    metadata:
+      labels:
+        app: <POD_NAME> #connect this to Deployment:metadata:label. Service will reach here via Deployment
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+      - name: <POD_NAME>
+        image: amr-registry.caas.intel.com/simics-vp-registry/sas-ssm/<OS_IMAGE>
+        env:
+        - name: USER_INFO
+          value: <USER_INFO>
+        command: ["/bin/bash"]
+        args: ["-c", "/usr/app/vncserver.sh -geometry 1600x980 -name '<POD_NAME>';<SIM_CMD>"]
+
+        securityContext:
+          privileged: false
+          allowPrivilegeEscalation: false
+          capabilities:
+            add: ["SYS_MODULE"]
+        resources:
+          requests:
+            hostdev.k8s.io/dev_vmx: 1
+            hostdev.k8s.io/dev_zero: 1
+            hostdev.k8s.io/dev_urandom: 1
+            hostdev.k8s.io/dev_nmihook: 1
+          limits:
+            hostdev.k8s.io/dev_vmx: 1
+            hostdev.k8s.io/dev_zero: 1
+            hostdev.k8s.io/dev_urandom: 1
+            hostdev.k8s.io/dev_nmihook: 1
+
+        volumeMounts:
+        - mountPath: /nfs/site/home/simics_lab
+          name: home
+        - mountPath: /nfs/site/itools
+          name: itools
+        - mountPath: /nfs/site/disks/ssg_stc_simics_users
+          name: simics-users
+        - mountPath: /nfs/site/disks/ssg_stc_simics_scratch
+          name: simics-scratch
+        - mountPath: /nfs/site/disks/ssg_stc_simics_base-packages-release
+          name: simics-base-packages-release
+        - mountPath: /nfs/site/disks/ssg_stc_simics_base-packages
+          name: simics-base-packages
+        - mountPath: /nfs/site/disks/ssg_stc_simics_extensions
+          name: simics-extensions
+        - mountPath: /nfs/site/disks/ssg_stc_simics_hasfulsim
+          name: simics-hasfulsim
+        - mountPath: /nfs/site/disks/ssg_stc_simics_release
+          name: simics-release
+        - mountPath: /nfs/site/disks/ssg_stc_simics_workloads
+          name: simics-workloads
+        - mountPath: /nfs/site/disks/ssg_stc_simics_jen_build_tmp
+          name: simics-jen-build-tmp
+        - mountPath: /nfs/site/disks/ssg_stc_simics_jen_last_good
+          name: simics-jen-last-good
+        - mountPath: /nfs/site/disks/ssg_stc_simics_tools
+          name: simics-tools
+        - mountPath: /nfs/site/proj/simics
+          name: simics
+      volumes:
+      - hostPath:
+          path: /nfs/site/proj/simics
+        name: simics
+      - hostPath:
+          path: /nfs/site/disks/ssg_stc_simics_base-packages-release
+        name: simics-base-packages-release
+      - hostPath:
+          path: /nfs/site/disks/ssg_stc_simics_base-packages
+        name: simics-base-packages
+      - hostPath:
+          path: /nfs/site/disks/ssg_stc_simics_extensions
+        name: simics-extensions
+      - hostPath:
+          path: /nfs/site/disks/ssg_stc_simics_hasfulsim
+        name: simics-hasfulsim
+      - hostPath:
+          path: /nfs/site/disks/ssg_stc_simics_release
+        name: simics-release
+      - hostPath:
+          path: /nfs/site/disks/ssg_stc_simics_tools
+        name: simics-tools
+      - hostPath:
+          path: /nfs/site/disks/ssg_stc_simics_workloads
+        name: simics-workloads
+      - hostPath:
+          path: /nfs/site/disks/ssg_stc_simics_jen_build_tmp
+        name: simics-jen-build-tmp
+      - hostPath:
+          path: /nfs/site/disks/ssg_stc_simics_jen_last_good
+        name: simics-jen-last-good
+      - hostPath:
+          path: /nfs/site/disks/ssg_stc_simics_scratch
+        name: simics-scratch
+      - hostPath:
+          path: /nfs/site/home/simics_lab
+        name: home
+      - hostPath:
+          path: /nfs/site/itools
+        name: itools
+      - hostPath:
+          path: /nfs/site/disks/ssg_stc_simics_users
+        name: simics-users
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: <POD_NAME> #This can be anything user-tool-platform
+  namespace: <NAMESPACE>
+
+spec:
+  ports:
+  - name: vnc
+    port: 5901
+    protocol: TCP
+  selector:
+    app: <POD_NAME> # Connect this to the Deployment:metadata:labels:app and #Deployment:spec:template:metadata:labels
+  type: NodePort
+

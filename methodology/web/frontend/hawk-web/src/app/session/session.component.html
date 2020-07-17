@@ -1,0 +1,64 @@
+<!--Intel Model Store Form-->
+<form class="mbr-form model-store-form" data-form-title="Model store Form" id="model-store-form">
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="platform" role="tabpanel" aria-labelledby="platform-tab">
+      <div class="row row-sm-offset">
+        <div class="col-md-3 col-sm-12 detail-multi-horizontal" data-for="">
+          <div class="content detailPageContainer scrollbar" id="filterDetail">
+            <span class="shareableLink" (click)="copyInputMessage(urlPlatform)">VNC (Click to copy to the clipboard)</span>
+            <textarea #urlPlatform id="urlPlatform" class="shareableLink" (click)="copyInputMessage(urlPlatform)">{{vnc}}</textarea>
+            <label class="clipBoardConfirmationMessage" *ngIf="msgHideAndShow">{{textMessage}}</label>
+            <div name="platforms" class="col-12 platformsContainer">
+              <div class="col-4 platformImageContainer">
+                <img src="https://gitlab.devtools.intel.com/simics-open/digital-library/-/raw/master/images/model-search/Model-Platform-256.png" class="platformImg" alt="platforms">
+              </div>
+                <div class="col-6 platformTitle">
+                  <p class="platformTitleName">{{userName | uppercase}}</p>
+                </div>
+            </div>
+            <span class="totalReleases">Total Number of Sessions: {{ initialSessionData.length }}</span>
+          </div>
+        </div>
+
+      <div id="platformReleasePanel" class="col-md-9 col-sm-12 detail-multi-horizontal" data-for="">
+        <div class="content detailPageContainer scrollbar" id="platformDetail">
+          <h2 class="headingReleaseTitle">Session Details</h2>
+            <ul class="platformReleseList" *ngIf="initialSessionData.length > 0">
+            <li>
+              <div class="margin-top-table table-responsive-sm">
+                <table id="pacakgeTableContents" class="table table-striped">
+                  <thead class="thead-dark panel-heading">
+                    <tr>
+                      <th *ngFor="let head of packageColumnHeadElements; let i = index" aria-controls="pacakgeTableContents" scope="col">{{head.replace('_',' ') | uppercase}}
+                    </tr>
+                  </thead>
+                  <tbody id="packageContents">
+                    <tr *ngFor="let sessionData of initialSessionData; index as j">
+                      <td>{{sessionData[0]}}</td>
+                      <td>{{sessionData[1]}}</td>
+                      <td><textarea #vncIp id="vncIp" class="shareableLink" rows="1" cols="15" readonly (click)="copyInputMessage(vncIp)">{{sessionData[2]}}</textarea></td>
+                      <td>{{sessionData[3]}}</td>
+                      <button type="button" class="btn btn-primary btn-lg btnCenterAlign" (click)="deleteUserSession(sessionData[0], 'simulation');">Delete</button>
+                      <button type="button" class="btn btn-primary btn-lg btnCenterAlign" (click)="assignVNCCopyLink(sessionData[2], vncIp)">Copy</button>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </li>
+          </ul>
+          <div class="noReleaseInfo" *ngIf="!initialSessionData">
+            <p> Sorry, no session information available for this user</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center btnLoader" *ngIf="deleteBtnLoader">
+    <div style="z-index: 999999; font-size: 12px;">Loading the sessions for the user...</div>
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner_overlay"></div>
+  </div>
+</form>

@@ -1,0 +1,8 @@
+[intel-it-sles15-sp1-extras]
+name=intel-it-sles15-sp1-extras
+enabled=1
+autorefresh=1
+baseurl=http://linuxset-repository.pdx.intel.com/pub/extras/SLES15/SP1/
+path=/
+type=rpm-md
+keeppackages=0

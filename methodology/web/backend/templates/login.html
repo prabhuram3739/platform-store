@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>SAS-SSM Hawk Web - Login</title>
+    <link href="{{ url_for('static',filename='assets/css/loginstyle.css') }}" rel="stylesheet" media="screen" type="text/css"/>
+</head>
+
+<body>
+    <div class="login-card">
+		<center>
+			<img src="{{ url_for('static',filename='assets/img/intel_blue.png') }}" style="width:80%;height:80%"> <p>
+			<h2>
+                SAS-SSM Hawk Web
+			</h2>
+		</center>
+        <h5>
+            Access is restricted to users with the group 'ssdv'.
+        </h5>
+        <form method=post action="{{ url_for('login')}}">
+            <input type="submit" name="login" class="login login-submit" value="Login (Intel SSO)">
+        </form>
+        {% if error_msg != "" %}
+        <h4>
+            <font color="red">ERROR: {{ error_msg }}</font>
+        </h4>
+        {% endif %}
+        <div class="login-help">
+            <!--<a href="https://wiki.ith.intel.com/display/SRESIMICS/Start+OYB+VP+in+SIMICS+SaaS+Cloud">wiki help page</a>-->
+        </div>
+    </div>
+
+</body>
+</html>

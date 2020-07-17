@@ -1,0 +1,32 @@
+{
+  "session_data":[
+    {
+      "user_id": "sachinsk",
+      "session_name": "sachinsk-simulation-1",
+      "host_os": "sles12sp5",
+      "ip_port": "10.66.254.154:1",
+      "created_date": "7.21.2020"
+    },
+    {
+      "user_id": "sachinsk",
+      "session_name": "sachinsk-simulation-1",
+      "host_os": "sles12sp1",
+      "ip_port": "10.66.254.116:5",
+      "created_date": "7.21.2020"
+    },
+    {
+      "user_id": "sachinsk",
+      "session_name": "sachinsk-simulation-1",
+      "host_os": "sles12sp2",
+      "ip_port": "10.66.254.116:6",
+      "created_date": "7.21.2020"
+    },
+    {
+      "user_id": "pmurug2x",
+      "session_name": "pmurug2x-simulation-1",
+      "host_os": "sles12sp4",
+      "ip_port": "10.66.254.116:13",
+      "created_date": "7.2.2020"
+    }
+  ]
+}

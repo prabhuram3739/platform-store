@@ -1,0 +1,8 @@
+[SLES12-SP5-12.5-0]
+name=SLES12-SP5-12.5-0
+enabled=1
+autorefresh=1
+baseurl=http://susemgr.iglb.intel.com/ks/dist/SLES12SP5_EC_prod
+path=/
+type=yast2
+keeppackages=0

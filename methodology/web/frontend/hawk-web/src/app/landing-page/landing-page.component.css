@@ -1,0 +1,27 @@
+.img-bg {
+  width: 120vw;
+  height: 120vh;
+  margin-left: -20vw;
+  margin-top: -15vh;
+  margin-bottom: -25vh;
+  background: url('https://camera.stc.isk.intel.com/bg.642553a176de0a9c42ef.jpg');
+  background-size: cover;
+  -webkit-animation: scale 60s linear infinite;
+  animation: scale 60s linear infinite;
+  position: fixed;
+  z-index: 99;
+}
+
+.bg {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top:0px;
+  background: linear-gradient(45deg,rgba(0,60,113,.9),rgba(0,113,197,.9));
+  z-index: 999;
+  margin-left: -0.5vh;
+}
+
+.welcomeText {
+  font-size: 20px;
+}

@@ -1,0 +1,170 @@
+<!--Intel Model Store Form-->
+<form class="mbr-form model-store-form" data-form-title="Model store Form" id="model-store-form" method="GET">
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="platform" role="tabpanel" aria-labelledby="platform-tab">
+      <div class="row row-sm-offset">
+        <div class="col-md-3 col-sm-12 col-lg-3 col-xl-3 multi-horizontal" data-for="">
+          <div class="content platformContainer" id="filterDetail">
+            <h2 id="filterDetail">Search Filters</h2>
+              <!--Simics Versions-->
+              <div class="clear-selection" title="Click to Clear Selections" (click)="clearSelection()" *ngIf="selectedCount">Clear Selection</div>
+              <h4 class="modelTypesTitle">Simics Versions</h4>
+              <span class="version-check custom-style-check" *ngFor="let version of simicsVersions; let i = index">
+                <input class="form-check-input versionCheckBox" [checked]=isSelectedVersion(version) (change)="onVersionChange(version.value)" #f1 type="checkbox" [value]="version" name="versiongroup" [(ngModel)]="version.selected" />
+                <label class="form-check-label modelTypeLabel mr-3" style="font-weight: normal">
+                  {{version.name | titlecase }}
+              </label>
+            </span>
+
+              <div class="row topSearchBox">
+                <div class="col-12 searchBoxDiv">
+                  <input type="search" #searchBox class="form-control mr-sm-2 searchBox" [(ngModel)]="filterText" name="searchBox" placeholder="Platform Search" id="search-box" autocomplete="off" aria-label="Search" (input)="getAllPlatforms(searchBox.value)"/>
+                  <div class="searchIcon"><i class="intelicon-search" title="search"></i></div>
+                </div>
+              </div>
+
+              <!--Platforms-->
+              <h4 class="activePlatformTitle">Platforms (Released Versions)</h4>
+              <div *ngFor="let platforms of platformArray; let i = index;">
+                <div name="platforms" (click)="getDetail(platforms, i, 'overviewDetail')" [ngClass]="{'highlight': selectedIndex === i}">
+                    <div class="caption" (click)="passName(platforms, 'platform', i, 'overviewDetail', 'versionDetail')" [ngClass]="{'highlight': selectedIndex === i}">
+                      <span id="platform-{{i}}" #platform class="contentTitle">{{ platforms.platform }} </span><span class="releaseTotal pull-right"> ({{platforms.releases[0].releaseName.length}})</span>
+                    </div>
+                  <!--</span>-->
+                </div>
+              </div>
+            </div>
+
+            <!--Version Container-->
+            <div class="content versionContainer mobile-content-panel" id="versionFilterDetail">
+              <div #versionDetail id="versionDetail" class="releasesContainer">
+                <h4 class="releaseVersionsTitle">Released Versions ({{clickedPlatformName? clickedPlatformName: 'Platform Name'}})</h4>
+                <ul class="collapse show list-group list-group-flush" id="releaseVersionContents" *ngIf="allReleases.length > 0">
+                  <div>
+                    <ul #releaseContents class="releaseContents">
+                      <li class="list-group-item releaseNameLabel col-12" *ngFor="let platformDetail of allReleases[0].releases[0].releaseName; index as i" [ngClass]="{'addBackgroundColor': isActive(platformDetail)}" (click)="getPlatformDetail(platformName, platformDetail)">
+                        <a>
+                          <span class="releaseNameChkBoxText">{{platformDetail}}</span>
+                        </a>
+                        <hr/>
+                      </li>
+                    </ul>
+                </div>
+                </ul>
+              </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12 col-lg-4 col-xl-5 multi-horizontal" data-for="">
+          <div class="content scrollbar mobile-content-panel homePageContainer mobile-content-panel">
+            <h2>Settings</h2>
+            <div class="row" *ngIf="platformArray.length > 0">
+              <!--Bios Version Dropdown-->
+              <div class="dropdown col-md-12 col-lg-12 col-xl-12 col-xs-12 col-sm-12">
+                <label class="col-md-2 col-lg-2 col-xl-2 col-sm-2 mr-4 mainPanelLabel" for="biosTxt">BIOS:</label>
+                <input class="col-md-6 col-lg-6 col-xl-6 col-sm-6 form-control searchBox mr-3" type="text" name="biosTxt" autocomplete="off" id="biosTxt" (change)="onBiosTxtBoxChangeEvent($event.target.value)" placeholder="BIOS Version" />
+                <div class="select">
+                <select name="bios" id="bios" (change)="biosChange($event.target.value);">
+                  <option>Select</option>
+                  <option *ngFor="let bios of biosValues; i as index;">{{bios.name}}</option>
+                </select>
+                </div>
+              </div>
+
+              <!--CRAFF Dropdown-->
+              <div class="dropdown col-md-12 col-lg-12 col-xl-12 col-xs-12 col-sm-12 mt-2">
+                <label class="col-md-2 col-lg-2 col-xl-2 col-sm-2 mr-4 mainPanelLabel" for="craffTxt">CRAFF:</label>
+                <input class="col-md-6 col-lg-6 col-xl-6 col-sm-6 form-control searchBox mr-3" type="text" name="craffTxt" autocomplete="off" id="craffTxt"  (change)="onCraffTxtBoxChangeEvent($event.target.value)" placeholder="CRAFF" />
+                <div class="select">
+                <select name="craff" id="craff" (change)="craffChange($event.target.value);">
+                  <option>Select</option>
+                  <option *ngFor="let craff of craffValues; i as index;">{{craff.name}}</option>
+                </select>
+              </div>
+              </div>
+            <!--</div>-->
+            <div class="d-flex justify-content-center custom-loader" *ngIf="loader">
+              <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="platformArray.length === 0">
+            <p> Sorry, no records available</p>
+          </div>
+          </div>
+      </div>
+
+      <div id="overviewPanel" class="col-md-5 col-sm-12 col-lg-5 col-xl-4 multi-horizontal" data-for="">
+        <div #overviewDetail class="content homePageContainer scrollbar mobile-content-panel" id="overviewDetail">
+          <h2 id="platformDetailTitle">Help</h2>
+          <ul *ngIf="type === 'platform'" class="platformReleseList">
+            <li *ngIf="showDetails">
+              <b>Platform Name:</b><p>{{platformName}}</p>
+              <b>Number of Version Available:</b><p>{{countOfReleses}}</p>
+              <b>Latest Release:</b><p>{{latestRelease}}</p>
+            </li>
+          </ul>
+          <!--Platform Release Details-->
+          <h2 class="headingReleaseTitle" *ngIf="releaseNamesUnfiltered.length > 0">Platform Release:</h2>
+            <ul class="platformReleseList" *ngIf="releaseNamesUnfiltered.length > 0">
+            <li>
+              <div class="margin-top-table table-responsive-sm">
+                <table class="table table-striped">
+                  <thead class="thead-dark panel-heading">
+                    <tr>
+                      <th scope="col">Platform Release</th>
+                      <th scope="col">Sharable Link(Release)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="packageContents">
+                    <tr>
+                      <td>{{clickedReleaseName}}</td>
+                      <td><a class="shareableLink" href="{{sharableReleaseVersionLink}}" target="_blank">Sharable Release Version Link</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </li>
+          </ul>
+          <div class="noReleaseInfo" *ngIf="!releaseNamesUnfiltered">
+            <p> Sorry, no release information available. Please select the release version.</p>
+          </div>
+          <div class="d-flex justify-content-center custom-loader" *ngIf="loader">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Host OS-->
+      <div class="col-md-3 col-sm-12 col-lg-3 col-xl-3 multi-horizontal" #osFilterDetail id="osFilterDetail">
+        <div class="content osContainer mobile-content-panel">
+          <h4 class="modelTypesTitle">Host OS</h4>
+          <ul class="hostOSText hostOSContents">
+            <li class="list-group-item hostOSNameLabel col-12" *ngFor="let host of hostOS; i as index;" [ngClass]="{'addBackgroundColor': isActiveHost(host)}" (click)="onHostChange(host)">{{host}}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-9 col-sm-12 col-lg-9 col-xl-9 multi-horizontal" data-for="">
+        <div class="content mobile-content-panel btnContainer mx-auto mobile-content-panel">
+          <div class="vncViewerCopyText" *ngIf="successMsg">
+            Copy VNC Link to include in the VNC Viewer: <span class="success">{{vnc}}</span>
+          </div>
+          <button type="button" class="btn btn-primary btn-lg btnCenterAlign" [disabled]="isDisabled" (click)="createSession()">Launch</button>
+          <button type="button" class="btn btn-primary btn-lg btnCenterAlign">
+            <a class="clickMoreDetails" routerLink="sessions/{{userid}}" (click)="sessionsPage(userid)">Sessions</a>
+          </button>
+          <button type="button" class="btn btn-dark btn-lg btnCenterAlign" disabled>Run (N)</button>
+          <button type="button" class="btn btn-success btn-lg btnCenterAlign" disabled>Download</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center btnLoader" *ngIf="launchBtnLoader">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner_overlay"></div>
+  </div>
+</form>

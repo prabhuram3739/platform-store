@@ -1,0 +1,7 @@
+[prod-intel-ec-sle11-sdk-sp4-updates-x86_64]
+name=prod-intel-ec-sle11-sdk-sp4-updates-x86_64
+enabled=1
+autorefresh=1
+baseurl=http://oscache.iglb.intel.com/ks/dist/child/prod-intel-ec-sle11-sdk-sp4-updates-x86_64/SLES11SP4_EC/
+type=rpm-md
+gpgcheck=0

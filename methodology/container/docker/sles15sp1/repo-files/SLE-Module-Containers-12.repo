@@ -1,0 +1,5 @@
+[SLE-Module-Containers-12]
+enabled=1
+autorefresh=1
+baseurl=http://linuxset.intel.com/SUSE-Updates/Updates/SLE-Module-Containers/12/x86_64/update/
+type=rpm-md

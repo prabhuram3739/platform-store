@@ -1,0 +1,8 @@
+[sles15-sp1-containers-updates]
+name=sles15-sp1-containers-updates
+enabled=1
+autorefresh=1
+baseurl=http://linuxset-repository.pdx.intel.com/SUSE-Updates/Updates/SLE-Module-Containers/15-SP1/x86_64/update/
+path=/
+type=rpm-md
+keeppackages=0
