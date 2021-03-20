@@ -36,7 +36,7 @@ setup(
         ]
     },
     install_requires=[
-        'Jinja2==2.11.2',
+        'Jinja2==2.11.3',
         'click==7.1.2',
         'columnar==1.3.1',
         'kubernetes==11.0.0',
