@@ -25,7 +25,7 @@
     "concurrently": "^5.2.0",
     "express": "^4.17.1",
     "gulp": "^4.0.2",
-    "highcharts": "^8.1.0",
+    "highcharts": "^9.0.0",
     "highcharts-angular": "^2.4.0",
     "it-mlaf-sass-bs4": "^7.0.4",
     "jquery": "^3.5.1",
